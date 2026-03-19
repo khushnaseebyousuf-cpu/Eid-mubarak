@@ -16,7 +16,326 @@
 
 <body>
   <h1>eid mubarak website!!</h1>
-  <p>Nothing to see here...</p>
+  <p><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kmr umais 💖</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+    font-family:Arial;
+    color:white;
+}
+
+/* 🔒 PASSWORD SCREEN */
+#lockScreen{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    z-index:20;
+}
+
+input{
+    padding:10px;
+    border-radius:10px;
+    border:none;
+}
+
+button{
+    padding:10px 20px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#ff4d6d;
+    color:white;
+}
+
+/* TAP SCREEN */
+#start{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    background:black;
+    z-index:10;
+}
+
+#content{
+    display:none;
+    position:absolute;
+    width:100%;
+    top:18%;
+    text-align:center;
+}
+
+#name{
+    font-size:32px;
+    color:#ff4d6d;
+    text-shadow:0 0 20px pink,0 0 40px red;
+}
+
+#message{
+    font-size:14px;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 PASSWORD -->
+<div id="lockScreen">
+    <h2>Enter Password 💖</h2>
+    <input type="password" id="pass">
+    <button onclick="checkPass()">Unlock</button>
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- TAP -->
+<div id="start" onclick="startApp()">Tap to Open 💖</div>
+
+<canvas id="canvas"></canvas>
+
+<!-- CONTENT -->
+<div id="content">
+    <div id="name"></div>
+    <div id="message"></div>
+</div>
+
+<script>
+
+// 🔒 PASSWORD
+const PASSWORD="1421";
+
+function checkPass(){
+    let input=document.getElementById("pass").value;
+    if(input===PASSWORD){
+        document.getElementById("lockScreen").style.display="none";
+        document.getElementById("start").style.display="flex";
+    }else{
+        document.getElementById("error").innerText="Wrong password 😢";
+    }
+}
+
+// canvas
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+// particles
+let stars=[], hearts=[], kisses=[];
+
+// stars
+for(let i=0;i<120;i++){
+    stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
+}
+
+// hearts ❤️
+for(let i=0;i<50;i++){
+    hearts.push({x:Math.random()*canvas.width,y:canvas.height});
+}
+
+// start
+function startApp(){
+    document.getElementById("start").style.display="none";
+    document.getElementById("content").style.display="block";
+    typeName();
+    typeMsg();
+    animate();
+}
+
+// typing name
+let name="Nazaliya ❤️ Umais";
+let ni=0;
+function typeName(){
+    if(ni<name.length){
+        document.getElementById("name").innerHTML+=name[ni++];
+        setTimeout(typeName,80);
+    }
+}
+
+// typing message
+let msg=`Eid Mubarak ❤️
+To the girl who has my whole heart.
+Hope your day is as wonderful as you are.
+
+Wishing a beautiful Eid to the most beautiful person I know.
+I hope your day is filled with laughter, family,
+and all the treats you love.
+Can’t wait to celebrate with you soon!`;
+
+let mi=0;
+function typeMsg(){
+    if(mi<msg.length){
+        document.getElementById("message").innerHTML+=msg[mi++];
+        setTimeout(typeMsg,15);
+    }
+}
+
+// 🌙 moon
+function moon(){
+    ctx.fillStyle="white";
+    ctx.beginPath();
+    ctx.arc(canvas.width-100,100,40,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.fillStyle="black";
+    ctx.beginPath();
+    ctx.arc(canvas.width-80,90,40,0,Math.PI*2);
+    ctx.fill();
+}
+
+// 🕌 mosque + 🕋 glowing Kaaba
+let glow=0;
+function mosque(){
+    let x = canvas.width/2;
+    let baseY = canvas.height - 160;
+
+    glow += 0.05;
+
+    // glow mosque
+    ctx.shadowColor = "gold";
+    ctx.shadowBlur = 20 + Math.sin(glow)*10;
+
+    // dome
+    ctx.fillStyle="gold";
+    ctx.beginPath();
+    ctx.arc(x, baseY, 50, Math.PI, 0);
+    ctx.fill();
+
+    // building
+    ctx.fillRect(x-90, baseY, 180, 100);
+
+    // minarets
+    ctx.fillRect(x-120, baseY-50, 30, 150);
+    ctx.fillRect(x+90, baseY-50, 30, 150);
+
+    ctx.shadowBlur = 0;
+
+    // Kaaba glow
+    ctx.shadowColor="yellow";
+    ctx.shadowBlur = 25 + Math.sin(glow)*15;
+
+    ctx.fillStyle="black";
+    ctx.fillRect(x-35, canvas.height-110, 70, 70);
+
+    ctx.fillStyle="gold";
+    ctx.fillRect(x-35, canvas.height-110, 70, 10);
+
+    ctx.shadowBlur = 0;
+}
+
+// 💑 couple + 💋 kiss
+let step=0;
+function couple(){
+    let x=canvas.width/2;
+    let y=canvas.height/2;
+
+    let move=Math.sin(step)*10;
+
+    ctx.fillStyle="pink";
+
+    // heads
+    ctx.beginPath();
+    ctx.arc(x-40+move,y,12,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x+40-move,y,12,0,Math.PI*2);
+    ctx.fill();
+
+    // bodies
+    ctx.strokeStyle="pink";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.moveTo(x-40+move,y+10);
+    ctx.lineTo(x-40+move,y+50);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x+40-move,y+10);
+    ctx.lineTo(x+40-move,y+50);
+    ctx.stroke();
+
+    // hands
+    ctx.beginPath();
+    ctx.moveTo(x-20,y+30);
+    ctx.lineTo(x+20,y+30);
+    ctx.stroke();
+
+    // 💋 kiss moment
+    if(Math.abs(move)<2){
+        createKiss(x,y);
+    }
+
+    step+=0.05;
+}
+
+// 💋 kiss particles
+function createKiss(x,y){
+    kisses.push({
+        x:x,
+        y:y-10,
+        dx:(Math.random()-0.5)*2,
+        dy:(Math.random()-2)*2,
+        life:50
+    });
+}
+
+// 🎬 animate
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // stars
+    ctx.fillStyle="white";
+    stars.forEach(s=>ctx.fillRect(s.x,s.y,2,2));
+
+    moon();
+    mosque();
+    couple();
+
+    // hearts ❤️
+    ctx.fillStyle="red";
+    hearts.forEach(h=>{
+        ctx.beginPath();
+        ctx.arc(h.x,h.y,5,0,Math.PI*2);
+        ctx.fill();
+        h.y-=1.5;
+        if(h.y<0) h.y=canvas.height;
+    });
+
+    // kisses 💋
+    ctx.font="16px Arial";
+    kisses.forEach(k=>{
+        ctx.fillText("💋",k.x,k.y);
+        k.x+=k.dx;
+        k.y+=k.dy;
+        k.life--;
+    });
+    kisses=kisses.filter(k=>k.life>0);
+
+    requestAnimationFrame(animate);
+}
+</script>
+
+</body>
+</html></p>
   <!-- Project -->
   <script src="main.js"></script>
 </body>
